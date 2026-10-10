@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>The Fear Within | Game</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <audio
+        id="scrubbing-sound"
+        src="audio/freesound_community-scrubbing-69126.mp3"
+        loop
+        preload="auto">
+    </audio>
+
+    <main>
+        <!-- Main menu -->
+        <section id="title-screen">
+            <video
+                id="menu-background-video"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+                aria-hidden="true">
+                <source
+                    src="videos/tv_static_loop.mp4"
+                    type="video/mp4">
+            </video>
+
+            <div
+                class="menu-background-shade"
+                aria-hidden="true">
+            </div>
+
+            <p class="author-name">China Robinson</p>
+
+            <h1>The Fear Within</h1>
+
+            <p class="subtitle">
+                A short interactive horror experience
+            </p>
+
+            <nav class="game-menu" aria-label="Main menu">
+                <button id="start-button" type="button">
+                    Start Game
+                </button>
+
+                <button
+                    id="help-button"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls="help-text">
+                    How to Play
+                </button>
+            </nav>
+
+            <p id="menu-audio-hint">
+                Click anywhere to enable audio.<br>
+                <span>Headphones recommended.</span>
+            </p>
+
+            <p id="help-text" hidden>
+                Click the action buttons to explore as Raven
+                and move through the story.
+            </p>
+
+            <p class="credit">
+                Based on the novel by China Robinson
+            </p>
+        </section>
+
+        <!-- Story introduction -->
+        <section
+            id="intro-screen"
+            hidden
+            aria-label="Story introduction">
+
+            <div class="intro-text">
+                <p>Raven graduated with plans for her future.</p>
+
+                <p>None of them included doubting her own eyes.</p>
+
+                <p>
+                    A sound no one else hears.<br>
+                    A figure no one else sees.
+                </p>
+
+                <p>Everyone tells her nothing is there.</p>
+
+                <p>She wants to believe them.</p>
+
+                <p>
+                    But something has begun to notice
+                    when she looks.
+                </p>
+            </div>
+
+            <button id="skip-intro-button" type="button">
+                Skip Intro
+            </button>
+        </section>
+
+        <!-- Episode title -->
+        <section
+            id="episode-screen"
+            hidden
+            aria-label="Episode 1">
+
+            <h2>The Fear Within</h2>
+            <p>Episode 1</p>
+        </section>
+<!-- Opening stair sequence -->
+<section id="stair-opening" hidden aria-label="Climbing the stairs">
+    <img
+        id="opening-stairs-image"
+        src="images/Ascending Into the Starry Night.jpg"
+        alt="Apartment stairs at night">
+
+    <video
+        id="opening-stairs-video"
+        muted
+        playsinline
+        preload="metadata"
+        poster="images/Ascending Into the Starry Night.jpg"
+        aria-hidden="true">
+    </video>
+
+    <div class="opening-stairs-shade" aria-hidden="true"></div>
+
+    <div class="opening-stairs-content">
+        <p id="opening-stairs-story">
+            The stairwell blurred under my feet, each step folding
+            into the next. My legs dragged behind me.
+        </p>
+
+        <div id="opening-balance-controls">
+            <p id="opening-balance-prompt">
+                Tap SPACE repeatedly to regain your balance.
+            </p>
+
+            <progress
+                id="opening-balance-meter"
+                max="100"
+                value="35"
+                aria-label="Balance">
+            </progress>
+        </div>
+
+        <button id="opening-stairs-button" type="button">
+            Regain balance
+        </button>
+    </div>
+</section>
+        <!-- Game scenes -->
+        <section id="game-screen" hidden>
+            <div
+                id="supplies-highlight"
+                aria-hidden="true">
+            </div>
+
+            <p id="objective-bubble" role="status" hidden></p>
+
+            <video
+                id="west-video"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                hidden>
+                <source
+                    src="videos/Mr. West talking.mp4"
+                    type="video/mp4">
+            </video>
+
+            <p class="subtitle" id="scene-label"></p>
+
+            <h2 id="scene-title"></h2>
+
+            <p id="story-text" aria-live="polite"></p>
+
+            <button id="action-button" type="button">
+                Continue
+            </button>
+
+            <button id="listen-button" type="button">
+                Listen at the door
+            </button>
+
+            <p id="inventory">Inventory: Empty</p>
+
+            <video
+                id="dumpster-video"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                aria-hidden="true"
+                hidden>
+                <source
+                    src="audio/dumpster_light_flicker_silent.mp4"
+                    type="video/mp4">
+            </video>
+        </section>
+    </main>
+
+    <!-- Intro music -->
+    <audio
+        id="intro-music"
+        src="audio/eerie music.mp3"
+        loop
+        preload="auto">
+    </audio>
+
+    <!-- Mr. West encounter ambience -->
+    <audio
+        id="west-ambience"
+        src="audio/freesound_community-low-engine-hum-72529.mp3"
+        loop
+        preload="auto">
+    </audio>
+
+    <!-- Door knocking -->
+    <audio
+        id="knock-sound"
+        src="audio/freesound_community-door-knocking-angry-88120.mp3"
+        preload="auto">
+    </audio>
+</body>
+</html>

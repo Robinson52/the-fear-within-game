@@ -1,0 +1,1866 @@
+* {
+    box-sizing: border-box;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    color: #eee;
+    font-family: Georgia, serif;
+    text-align: center;
+}
+
+main {
+    width: 100%;
+    max-width: 1000px;
+}
+
+p {
+    line-height: 1.7;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus-visible {
+    outline: 2px solid #e84b59;
+    outline-offset: 5px;
+}
+
+/* MAIN MENU */
+
+#title-screen {
+    min-height: calc(100vh - 48px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(110, 0, 0, 0.18),
+        transparent 65%
+    );
+}
+
+.author-name {
+    margin: 0 0 20px;
+    color: #999;
+    font-family: Arial, sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+#title-screen h1 {
+    margin: 0;
+    color: #c92332;
+    font-size: clamp(3rem, 9vw, 5.5rem);
+    line-height: 1.1;
+    text-shadow: 0 0 35px rgba(180, 0, 0, 0.25);
+}
+
+#title-screen .subtitle {
+    margin: 24px 0 0;
+    color: #aaa;
+    font-family: Arial, sans-serif;
+    font-size: 0.7rem;
+    line-height: 1.8;
+    letter-spacing: 3px;
+}
+
+.game-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 48px;
+}
+
+.game-menu button {
+    min-width: 160px;
+    padding: 15px 24px;
+    border: 1px solid #513035;
+    border-radius: 4px;
+    background: #100a0b;
+    color: #eee;
+    font-family: Arial, sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition:
+        background 0.2s,
+        border-color 0.2s,
+        box-shadow 0.2s;
+}
+
+.game-menu button:hover {
+    background: #260b10;
+    border-color: #c92332;
+    box-shadow: 0 0 20px rgba(180, 0, 0, 0.15);
+}
+
+#help-text {
+    max-width: 420px;
+    margin: 24px 0 0;
+    color: #bbb;
+}
+
+#title-screen .credit {
+    margin: 56px 0 0;
+    color: #777;
+}
+
+/* STORY INTRODUCTION */
+
+#intro-screen {
+    min-height: calc(100vh - 48px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    background: #000;
+}
+
+.intro-text {
+    width: 100%;
+    max-width: 650px;
+    min-height: 180px;
+    display: grid;
+    place-items: center;
+}
+
+.intro-text p {
+    margin: 0;
+    font-size: clamp(1.25rem, 3vw, 1.8rem);
+    line-height: 1.8;
+    color: #eee;
+    text-align: center;
+}
+
+#skip-intro-button {
+    padding: 10px 18px;
+    border: 1px solid #777;
+    background: transparent;
+    color: #ccc;
+    font: inherit;
+}
+
+#skip-intro-button:hover {
+    border-color: #fff;
+    color: #fff;
+}
+
+#skip-intro-button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 5px;
+}
+
+/* GAME SCREEN */
+
+#game-screen {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: calc(100vh - 48px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 40px 24px;
+    border-radius: 8px;
+    background: #000;
+}
+
+/* Opening door image */
+
+#game-screen.door-scene::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+        url("images/Apartment front door.jpg")
+        center / cover no-repeat;
+    animation:
+        door-fade 2s ease-out both,
+        door-zoom 25s ease-out forwards;
+}
+
+#game-screen.door-scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.15) 20%,
+        rgba(0, 0, 0, 0.65) 55%,
+        rgba(0, 0, 0, 0.95) 100%
+    );
+}
+
+@keyframes door-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes door-zoom {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.15);
+    }
+}
+
+#scene-label {
+    margin: 0 0 14px;
+    color: #aaa;
+    font-family: Arial, sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+#scene-title {
+    max-width: 750px;
+    margin: 0 auto 18px;
+    color: #eee;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.25;
+    text-shadow: 0 2px 8px #000;
+}
+
+#scene-title::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 1px;
+    margin: 14px auto 0;
+    background: #8b202b;
+}
+
+#story-text {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto 20px;
+    color: #ccc;
+    font-size: 1rem;
+    line-height: 1.7;
+    text-shadow: 0 2px 8px #000;
+}
+
+#game-screen button {
+    margin: 8px;
+    padding: 14px 24px;
+    border: 1px solid #513035;
+    border-radius: 4px;
+    background: #100a0b;
+    color: #eee;
+    font-family: Arial, sans-serif;
+    font-size: 0.85rem;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+#game-screen button:hover {
+    background: #260b10;
+    border-color: #c92332;
+}
+
+#game-screen #action-button {
+    border-color: #9b2633;
+    background: #290c12;
+}
+
+#game-screen #listen-button {
+    color: #bbb;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#inventory {
+    margin: 16px 0 0;
+    color: #999;
+    font-family: Arial, sans-serif;
+    font-size: 0.8rem;
+}
+
+/* MR. WEST'S SCENE */
+
+#game-screen.west-scene {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 18px;
+    align-content: center;
+    align-items: start;
+    padding: 30px 24px;
+    background: #000;
+}
+
+#game-screen.west-scene::before,
+#game-screen.west-scene::after {
+    display: none;
+}
+
+#game-screen.west-scene #scene-label {
+    grid-column: 1 / -1;
+    margin: 0;
+}
+
+#game-screen.west-scene #scene-title {
+    grid-column: 1 / -1;
+    margin: 0 auto 12px;
+}
+
+#west-video {
+    position: relative;
+    width: 100%;
+    object-fit: contain;
+}
+
+#game-screen.west-scene #west-video {
+    grid-column: 1;
+    grid-row: 3;
+    width: 100%;
+    height: 50vh;
+    max-height: 420px;
+    min-height: 220px;
+    object-fit: contain;
+    object-position: center top;
+    pointer-events: none;
+}
+
+/* Mr. West's bubble points toward him. */
+
+#game-screen.west-scene #story-text {
+    position: relative;
+    grid-column: 2;
+    grid-row: 3;
+    align-self: start;
+    width: 100%;
+    max-width: 360px;
+    margin: 65px 0 0;
+    padding: 18px 20px;
+    border: 1px solid #754149;
+    border-radius: 14px;
+    background: #160e10;
+    color: #eee;
+    text-align: left;
+    text-shadow: none;
+    font-size: 1rem;
+    line-height: 1.7;
+    z-index: 1;
+}
+
+#game-screen.west-scene #story-text::before {
+    content: "Mr. West";
+    display: block;
+    margin-bottom: 8px;
+    color: #e06b76;
+    font-family: Arial, sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+#game-screen.west-scene #story-text::after {
+    content: "";
+    position: absolute;
+    top: 30px;
+    left: -9px;
+    width: 16px;
+    height: 16px;
+    background: #160e10;
+    border-left: 1px solid #754149;
+    border-bottom: 1px solid #754149;
+    transform: rotate(45deg);
+}
+
+#game-screen.west-scene #action-button,
+#game-screen.west-scene #inventory {
+    grid-column: 1 / -1;
+    justify-self: center;
+}
+
+/* RAVEN'S RESPONSE */
+/* Her box sits below the video and has no pointer. */
+
+#game-screen.west-scene.raven-speaking #story-text {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    justify-self: center;
+    max-width: 650px;
+    margin: 0;
+    border-color: #657d91;
+    background: #101820;
+}
+
+#game-screen.west-scene.raven-speaking #story-text::before {
+    content: "Raven";
+    color: #b2cce0;
+}
+
+#game-screen.west-scene.raven-speaking #story-text::after {
+    display: none;
+}
+
+#game-screen.raven-speaking #scene-title::after {
+    background: #657d91;
+}
+
+/* SMALL SCREENS */
+
+@media (max-width: 600px) {
+    body {
+        padding: 12px;
+    }
+
+    #title-screen,
+    #intro-screen,
+    #game-screen {
+        min-height: calc(100vh - 24px);
+    }
+
+    #game-screen {
+        padding: 28px 16px;
+    }
+
+    #game-screen.west-scene {
+        grid-template-columns: 1fr;
+        padding: 24px 16px;
+    }
+
+    #game-screen.west-scene #west-video {
+        grid-column: 1;
+        grid-row: 3;
+        height: 40vh;
+        min-height: 180px;
+        max-height: 300px;
+    }
+
+    #game-screen.west-scene #story-text {
+        grid-column: 1;
+        grid-row: 4;
+        justify-self: center;
+        margin: 0;
+    }
+
+    #game-screen.west-scene #story-text::after {
+        top: -9px;
+        left: 50%;
+        transform: rotate(135deg);
+    }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+    #game-screen.door-scene::before {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}
+/* LOOKING AT THE BOOTS */
+
+#game-screen.boots-scene::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+        url("images/Olive-yellow\ liquid\ coating\ black\ boots.jpg")
+        center / cover no-repeat;
+    animation: door-fade 1.5s ease-out both;
+}
+
+#game-screen.boots-scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.05) 30%,
+        rgba(0, 0, 0, 0.65) 65%,
+        rgba(0, 0, 0, 0.95) 100%
+    );
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #game-screen.boots-scene::before {
+        animation: none;
+    }
+}
+/* CLOSET AND OBJECTIVE */
+
+#game-screen.closet-scene {
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.1),
+            rgba(0, 0, 0, 0.7)
+        ),
+        url("images/closet.png") center / cover no-repeat;
+}
+
+#objective-bubble {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    width: max-content;
+    max-width: calc(100% - 32px);
+    margin: 0;
+    padding: 14px 24px;
+    border: 1px solid #ed6975;
+    border-radius: 12px;
+    background: #a51d2b;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+/* Narration below the video, without a speaker or pointer. */
+
+#game-screen.west-scene.narration-scene #story-text {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    justify-self: center;
+    max-width: 650px;
+    margin: 0;
+    padding: 18px 20px;
+    border: none;
+    background: rgba(0, 0, 0, 0.8);
+    color: #ccc;
+    font-style: italic;
+    text-align: center;
+}
+
+#game-screen.west-scene.narration-scene #story-text::before,
+#game-screen.west-scene.narration-scene #story-text::after {
+    display: none;
+}
+/* Closet image with a gentle zoom toward the gloves */
+
+#game-screen.closet-scene {
+    background: #000;
+}
+
+#game-screen.closet-scene::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+        url("images/Ivory\ Gloves\ in\ the\ Silent\ Closet.jpg")
+        65% center / cover no-repeat;
+    transform-origin: 65% 58%;
+    animation: closet-zoom 8s ease-out forwards;
+}
+
+#game-screen.closet-scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.15),
+        transparent 45%,
+        rgba(0, 0, 0, 0.65)
+    );
+}
+
+@keyframes closet-zoom {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.08);
+    }
+}
+
+/* Compact objective panel */
+
+#objective-bubble {
+    top: 24px;
+    left: 24px;
+    right: auto;
+    transform: none;
+    width: fit-content;
+    max-width: calc(100% - 48px);
+    padding: 12px 18px;
+    border: 1px solid #b8404c;
+    border-left: 4px solid #ff7683;
+    border-radius: 6px;
+    background: rgba(125, 17, 31, 0.95);
+    color: #fff;
+    text-align: left;
+    font-size: 0.95rem;
+    font-weight: normal;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+}
+
+#objective-bubble::before {
+    content: "NEW OBJECTIVE";
+    display: block;
+    margin-bottom: 6px;
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #game-screen.closet-scene::before {
+        animation: none;
+        transform: scale(1.08);
+    }
+}
+#episode-screen {
+    min-height: calc(100vh - 48px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+}
+
+#episode-screen h2 {
+    margin: 0;
+    color: #c92332;
+    font-family: Georgia, serif;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    line-height: 1.2;
+    text-shadow: 0 0 30px rgba(180, 0, 0, 0.25);
+}
+
+#episode-screen p {
+    margin: 24px 0 0;
+    color: #eee;
+    font-family: Arial, sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+    #episode-screen {
+        min-height: calc(100vh - 24px);
+    }
+}
+#game-screen.boots-scene.narration-scene #story-text {
+    font-style: italic;
+    text-align: center;
+}
+/* Scrubbing scene background */
+#game-screen.scrubbing-scene::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+        url("images/scrubbing-boots.png")
+        center / cover no-repeat;
+}
+
+#game-screen.scrubbing-scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1) 35%,
+        rgba(0, 0, 0, 0.85) 100%
+    );
+}
+
+/* Raven's thoughts */
+#game-screen.thought-scene #scene-title {
+    color: #c4d5e4;
+    font-family: Arial, sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+#game-screen.thought-scene #scene-title::after {
+    display: none;
+}
+
+#game-screen.thought-scene #story-text {
+    position: relative;
+    max-width: 500px;
+    padding: 20px 24px;
+    border: 1px solid #657d91;
+    border-radius: 28px;
+    background: rgba(16, 24, 32, 0.94);
+    color: #eee;
+    font-style: italic;
+    text-align: center;
+    text-shadow: none;
+}
+
+#game-screen.thought-scene #story-text::after {
+    content: "";
+    position: absolute;
+    bottom: -13px;
+    right: 40px;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #657d91;
+    border-radius: 50%;
+    background: #101820;
+}
+
+#game-screen.thought-scene #story-text::before {
+    content: "";
+    position: absolute;
+    bottom: -25px;
+    right: 28px;
+    width: 7px;
+    height: 7px;
+    border: 1px solid #657d91;
+    border-radius: 50%;
+    background: #101820;
+}
+#game-screen.narration-scene #story-text,
+#game-screen.thought-scene #story-text {
+    font-style: italic;
+}
+#game-screen.scrubbing-scene::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+        url("images/cleaning boots.jpg")
+        center / cover no-repeat;
+    opacity: 1;
+}
+
+#game-screen.scrubbing-scene::after {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1) 30%,
+        rgba(0, 0, 0, 0.85) 100%
+    );
+}
+#game-screen.bagging-scene::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+        url("images/bagging-boots.png")
+        center / cover no-repeat;
+}
+
+#game-screen.bagging-scene::after {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1) 30%,
+        rgba(0, 0, 0, 0.85) 100%
+    );
+}
+#game-screen.bagging-scene::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+        url("images/Glossy\ mustard\ smears\ on\ black\ boots.jpg")
+        center / cover no-repeat;
+    opacity: 1;
+    animation: none;
+    transform: none;
+}
+
+#game-screen.bagging-scene::after {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1) 30%,
+        rgba(0, 0, 0, 0.85) 100%
+    );
+}
+#game-screen.west-scene #scene-title {
+    display: none;
+}
+/* Keep background layers from blocking buttons. */
+#game-screen::before,
+#game-screen::after {
+    pointer-events: none;
+}
+
+/* Keep Back above the scene and video. */
+#game-screen #back-button {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 100;
+    pointer-events: auto;
+}
+
+#game-screen #back-button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+/* Mission notification */
+#game-screen #objective-bubble {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    z-index: 20;
+
+    width: min(320px, calc(100% - 140px));
+    box-sizing: border-box;
+    margin: 0;
+    padding: 16px 20px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(27, 22, 24, 0.97),
+        rgba(9, 9, 12, 0.95)
+    );
+
+    border: 1px solid rgba(160, 102, 110, 0.45);
+    border-left: 4px solid #b54959;
+    border-radius: 2px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    color: #f2e9e9;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.5;
+    text-align: left;
+
+    pointer-events: none;
+}
+
+#game-screen #objective-bubble::before {
+    content: "◇ NEW OBJECTIVE";
+    display: block;
+    margin-bottom: 7px;
+
+    color: #d18a95;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+}
+
+#game-screen #objective-bubble[hidden] {
+    display: none !important;
+}
+
+#game-screen #objective-bubble.objective-active {
+    animation: objective-notification 4.2s ease both;
+}
+
+@keyframes objective-notification {
+    0% {
+        opacity: 0;
+        transform: translateX(-16px);
+    }
+
+    10%,
+    78% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+}
+
+@media (max-width: 600px) {
+    #game-screen #objective-bubble {
+        top: 16px;
+        left: 12px;
+        padding: 12px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #game-screen #objective-bubble.objective-active {
+        animation: none;
+    }
+}
+/* Keep the moving pictures inside the game screen. */
+#game-screen.stairs-scene,
+#game-screen.dumpster-scene {
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* Shared background settings */
+#game-screen.stairs-scene::before,
+#game-screen.dumpster-scene::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    opacity: 1;
+    pointer-events: none;
+}
+
+/* Stairs: slowly look farther down while moving closer. */
+#game-screen.stairs-scene::before {
+    background-image: url("images/Going\ down\ steps.jpg");
+    transform-origin: center;
+    animation: stairs-camera 9s ease-in-out forwards;
+}
+
+/* Dumpster: slowly move closer to the picture. */
+#game-screen.dumpster-scene::before {
+    background-image: url("images/Trash\ being\ thrown.jpg");
+    transform-origin: center;
+    animation: dumpster-camera 10s ease-in-out forwards;
+}
+
+/* Stationary shading behind the narration */
+#game-screen.stairs-scene::after,
+#game-screen.dumpster-scene::after {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1) 30%,
+        rgba(0, 0, 0, 0.85) 100%
+    );
+
+    pointer-events: none;
+}
+
+@keyframes stairs-camera {
+    from {
+        transform: scale(1.08) translateY(2%);
+    }
+
+    to {
+        transform: scale(1.16) translateY(-3%);
+    }
+}
+
+@keyframes dumpster-camera {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.12);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #game-screen.stairs-scene::before,
+    #game-screen.dumpster-scene::before {
+        animation: none;
+        transform: none;
+    }
+}
+/* Use the still image for the dumpster approach. */
+#game-screen.dumpster-approach-scene #dumpster-video {
+    display: none !important;
+}
+
+#game-screen.dumpster-approach-scene::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    background:
+        url("images/dumpster.jpeg")
+        center / cover no-repeat;
+
+    opacity: 1;
+    transform-origin: center;
+    animation: dumpster-camera 12s ease-in-out forwards;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #game-screen.dumpster-approach-scene::before {
+        animation: none;
+        transform: none;
+    }
+}
+/* Keep scene headings above the image */
+#game-screen.dumpster-approach-scene #scene-label,
+#game-screen.dumpster-scene #scene-label,
+#game-screen.dumpster-approach-scene #scene-title,
+#game-screen.dumpster-scene #scene-title {
+    position: relative;
+    z-index: 10;
+    color: #fff;
+    text-shadow: 0 2px 8px #000;
+}
+
+/* Rise and fade in, pause, then fade out */
+#game-screen.dumpster-approach-scene #story-text,
+#game-screen.dumpster-scene #story-text {
+    position: relative;
+    z-index: 10;
+    color: #fff;
+    text-shadow: 0 2px 8px #000;
+    animation: dumpster-story-reveal 12s ease-in-out both;
+}
+
+@keyframes dumpster-story-reveal {
+    0% {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    15% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    82% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #game-screen.dumpster-approach-scene #story-text,
+    #game-screen.dumpster-scene #story-text {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+}
+#game-screen.dumpster-approach-scene #action-button,
+#game-screen.dumpster-scene #action-button {
+    display: block !important;
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    z-index: 100 !important;
+
+    width: fit-content;
+    max-width: 100%;
+    margin: 24px auto 0 !important;
+    padding: 14px 24px;
+    flex-shrink: 0;
+
+    background: #8b1717 !important;
+    border: 1px solid #c74646 !important;
+    border-radius: 4px;
+    color: #fff !important;
+    font: inherit;
+    cursor: pointer;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    animation: none !important;
+}
+
+#game-screen.dumpster-approach-scene #action-button:hover,
+#game-screen.dumpster-scene #action-button:hover {
+    background: #ae2020 !important;
+}
+/* Move the supplies button slightly upward */
+#game-screen.closet-scene #action-button {
+    position: relative;
+    top: -30px;
+    z-index: 10;
+}
+
+/* Only show the outline in the supplies scene */
+#supplies-highlight {
+    display: none;
+    pointer-events: none;
+}
+
+#game-screen.closet-scene #supplies-highlight {
+    display: block;
+    position: absolute;
+
+    left: 4%;
+    top: 7%;
+    width: 92%;
+    height: 63%;
+
+    z-index: 3;
+    border: 2px solid #ffd84d;
+    border-radius: 12px;
+
+    box-shadow:
+        0 0 12px rgba(255, 216, 77, 0.45),
+        inset 0 0 12px rgba(255, 216, 77, 0.12);
+
+    animation: supplies-glow 2.5s ease-in-out infinite;
+}
+
+@keyframes supplies-glow {
+    0%, 100% {
+        border-color: #ffd84d;
+        box-shadow: 0 0 8px rgba(255, 216, 77, 0.3);
+    }
+
+    50% {
+        border-color: #fff0a3;
+        box-shadow: 0 0 18px rgba(255, 216, 77, 0.6);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #game-screen.closet-scene #supplies-highlight {
+        animation: none;
+    }
+}
+#game-screen.closet-scene #supplies-highlight {
+    display: block !important;
+    position: absolute !important;
+    left: 4%;
+    top: 7%;
+    width: 92%;
+    height: 63%;
+    z-index: 50 !important;
+    border: 3px solid #ffd84d !important;
+    border-radius: 12px;
+    box-shadow: 0 0 18px rgba(255, 216, 77, 0.6);
+    pointer-events: none;
+}
+#game-screen #supplies-highlight {
+    display: none !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: none !important;
+
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 3 !important;
+}
+
+/* Zoom the image and outlines together */
+#game-screen.closet-scene::before,
+#game-screen.closet-scene #supplies-highlight {
+    transform-origin: 65% 58% !important;
+    animation: supplies-camera 8s ease-out forwards !important;
+}
+
+#game-screen.closet-scene #supplies-highlight {
+    display: block !important;
+}
+
+#supplies-highlight svg {
+    position: absolute;
+    display: block;
+    max-width: none;
+    overflow: visible;
+}
+
+#supplies-highlight path {
+    fill: none;
+    stroke: #ffdf59;
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+    filter: drop-shadow(0 0 3px rgba(255, 215, 60, 0.7));
+}
+
+/* Keep the button above the outlines */
+#game-screen.closet-scene #action-button {
+    position: relative;
+    top: -30px;
+    z-index: 10;
+}
+
+@keyframes supplies-camera {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.08);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #game-screen.closet-scene::before,
+    #game-screen.closet-scene #supplies-highlight {
+        animation: none !important;
+        transform: none !important;
+    }
+}
+#stairs-video {
+    display: none;
+}
+
+#game-screen.upstairs-scene {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+#game-screen.upstairs-scene #stairs-video:not([hidden]) {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#stairs-video[hidden] {
+    display: none !important;
+}
+
+#game-screen.upstairs-scene::before {
+    content: none;
+}
+
+#game-screen.upstairs-scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        transparent 40%,
+        rgba(0, 0, 0, 0.8) 100%
+    );
+}
+
+#game-screen.upstairs-scene #story-text,
+#game-screen.upstairs-scene #scene-label,
+#game-screen.upstairs-scene #scene-title,
+#game-screen.upstairs-scene #inventory,
+#game-screen.upstairs-scene #inventory-icons {
+    position: relative;
+    z-index: 2;
+}
+
+#game-screen.upstairs-scene #action-button {
+    display: block;
+    position: relative;
+    z-index: 10;
+    margin: 24px auto 0;
+    background: #8b1717;
+    border: 1px solid #c74646;
+    color: white;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    animation: none;
+}
+
+#game-screen.upstairs-scene #objective-bubble,
+#game-screen.upstairs-scene #back-button {
+    z-index: 100;
+}
+#door-video {
+    display: none;
+}
+
+#door-video[hidden] {
+    display: none !important;
+}
+
+#game-screen.return-door-scene::before {
+    content: none;
+}
+
+#game-screen.return-door-scene #door-video:not([hidden]) {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#game-screen.return-door-scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        transparent 35%,
+        rgba(0, 0, 0, 0.85)
+    );
+}
+
+#game-screen.return-door-scene #story-text,
+#game-screen.return-door-scene #scene-label,
+#game-screen.return-door-scene #scene-title,
+#game-screen.return-door-scene #inventory,
+#game-screen.return-door-scene #inventory-icons {
+    position: relative;
+    z-index: 2;
+}
+
+#game-screen.return-door-scene #action-button:not([hidden]) {
+    display: block;
+    position: relative;
+    z-index: 10;
+    margin: 24px auto 0;
+    background: #8b1717;
+    border: 1px solid #c74646;
+    color: white;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    animation: none;
+}
+
+#game-screen.return-door-scene #action-button[hidden] {
+    display: none !important;
+}
+
+#game-screen.return-door-scene #back-button,
+#game-screen.return-door-scene #objective-bubble {
+    z-index: 100;
+}
+/* Flickering bulb video */
+
+#bulb-video {
+    display: none;
+}
+
+#bulb-video[hidden] {
+    display: none !important;
+}
+
+#game-screen.bulb-scene::before {
+    content: none;
+}
+
+#game-screen.bulb-scene #bulb-video:not([hidden]) {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Figure viewed from the second-floor railing */
+
+#game-screen.parking-lot-figure-scene::before {
+    content: "";
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    background:
+        url("images/parking-lot-figure.jpg")
+        center / cover no-repeat;
+
+    opacity: 1;
+    animation: figure-camera 14s ease-out forwards;
+}
+
+/* Shading behind the narration */
+
+#game-screen.bulb-scene::after,
+#game-screen.parking-lot-figure-scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.1) 35%,
+        rgba(0, 0, 0, 0.85) 100%
+    );
+}
+
+#game-screen.bulb-scene #story-text,
+#game-screen.parking-lot-figure-scene #story-text {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-shadow: 0 2px 8px black;
+}
+
+/* Red, centered action button */
+
+#game-screen.bulb-scene #action-button,
+#game-screen.parking-lot-figure-scene #action-button {
+    display: block !important;
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    z-index: 10;
+
+    width: fit-content;
+    max-width: 100%;
+    margin: 24px auto 0;
+    padding: 14px 24px;
+
+    background: #8b1717;
+    border: 1px solid #c74646;
+    color: white;
+    font: inherit;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto;
+    animation: none !important;
+}
+
+#game-screen.bulb-scene #action-button:hover,
+#game-screen.parking-lot-figure-scene #action-button:hover {
+    background: #ae2020;
+}
+
+#game-screen.bulb-scene #back-button,
+#game-screen.parking-lot-figure-scene #back-button,
+#game-screen.bulb-scene #objective-bubble,
+#game-screen.parking-lot-figure-scene #objective-bubble {
+    z-index: 100;
+}
+
+@keyframes figure-camera {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.06);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #game-screen.parking-lot-figure-scene::before {
+        animation: none;
+        transform: none;
+    }
+}
+#game-screen #objective-bubble.objective-active {
+    width: fit-content !important;
+    max-width: min(300px, calc(100% - 48px)) !important;
+    padding: 12px 16px !important;
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+    text-align: left;
+}
+
+#game-screen #objective-bubble::before {
+    font-size: 11px !important;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+/* MAIN MENU */
+#title-screen {
+    background: #101010;
+    color: #c92332;
+}
+
+#title-screen h1 {
+    color: #e52b3b;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 0 0 18px rgba(229, 43, 59, 0.25);
+}
+
+#title-screen .author-name,
+#title-screen .subtitle,
+#title-screen .credit,
+#title-screen #help-text {
+    color: #c92332;
+}
+
+#title-screen .game-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 40px;
+}
+
+#title-screen .game-menu button {
+    width: min(320px, 90%);
+    min-height: 58px;
+    padding: 16px 24px;
+
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    box-shadow: none;
+
+    color: #c92332;
+    font-family: Arial, sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: none;
+    cursor: pointer;
+
+    transition:
+        color 180ms ease,
+        background-color 180ms ease,
+        text-shadow 180ms ease,
+        border-color 180ms ease;
+}
+
+#title-screen .game-menu button:hover,
+#title-screen .game-menu button:focus-visible {
+    background: #000;
+    border-color: #351014;
+    color: #ff3448;
+    box-shadow: none;
+
+    text-shadow:
+        0 0 6px rgba(255, 52, 72, 0.9),
+        0 0 16px rgba(255, 52, 72, 0.65),
+        0 0 28px rgba(255, 52, 72, 0.35);
+}
+
+#title-screen .game-menu button:focus-visible {
+    outline: 2px solid #c92332;
+    outline-offset: 4px;
+}
+
+#title-screen .game-menu button:active {
+    background: #080000;
+    color: #ff7885;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #title-screen .game-menu button {
+        transition: none;
+    }
+}
+/* ANIMATED TV MENU BACKGROUND */
+#title-screen {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: #000;
+}
+
+#title-screen #menu-background-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -2;
+    pointer-events: none;
+}
+
+#title-screen .menu-background-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.35),
+            rgba(0, 0, 0, 0.6)
+        );
+}
+/* RANDOM MAIN MENU GLITCH */
+#title-screen.menu-glitch #menu-background-video {
+    animation: menu-tv-glitch 220ms steps(1, end);
+}
+
+#title-screen.menu-glitch h1 {
+    animation: menu-title-glitch 220ms steps(1, end);
+}
+
+@keyframes menu-tv-glitch {
+    0%, 100% {
+        transform: translateX(0);
+        filter: none;
+    }
+
+    20% {
+        transform: translateX(-3px);
+        filter: contrast(1.3) brightness(0.85);
+    }
+
+    45% {
+        transform: translateX(3px);
+        filter: contrast(1.5) brightness(1.05);
+    }
+
+    70% {
+        transform: translateX(-2px);
+        filter: contrast(1.2) brightness(0.9);
+    }
+}
+
+@keyframes menu-title-glitch {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-2px) skewX(-2deg);
+        text-shadow: 3px 0 #750014, -2px 0 #ff6575;
+    }
+
+    45% {
+        transform: translateX(2px);
+        text-shadow: -3px 0 #750014, 2px 0 #ff6575;
+    }
+
+    70% {
+        transform: translateX(-1px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #title-screen.menu-glitch #menu-background-video,
+    #title-screen.menu-glitch h1 {
+        animation: none;
+    }
+}
+/* OPENING STAIR SEQUENCE */
+#stair-opening {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: calc(100vh - 48px);
+    background: #000;
+}
+
+#stair-opening[hidden],
+#stair-opening [hidden] {
+    display: none !important;
+}
+
+#opening-stairs-image,
+#opening-stairs-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+#opening-stairs-image {
+    z-index: 0;
+}
+
+#opening-stairs-video {
+    z-index: 1;
+}
+
+.opening-stairs-shade {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(
+        transparent 20%,
+        rgba(0, 0, 0, 0.85) 100%
+    );
+    pointer-events: none;
+}
+
+.opening-stairs-content {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    width: min(600px, 88%);
+    text-align: center;
+    color: #eee;
+}
+
+#opening-stairs-story {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    text-shadow: 0 2px 8px #000;
+}
+
+#opening-balance-prompt {
+    font-family: Arial, sans-serif;
+    font-size: 0.85rem;
+    color: #ffcf72;
+}
+
+#opening-balance-meter {
+    display: block;
+    width: min(300px, 100%);
+    height: 12px;
+    margin: 16px auto 24px;
+    accent-color: #c92332;
+}
+
+#opening-stairs-button {
+    padding: 14px 28px;
+    border: 1px solid #e53746;
+    border-radius: 4px;
+    background: #9e1422;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+#opening-stairs-button:hover {
+    background: #c92332;
+    box-shadow: 0 0 18px rgba(201, 35, 50, 0.35);
+}
+
+#opening-stairs-button:disabled {
+    opacity: 0.65;
+    cursor: default;
+}
+/* BLACK SCREEN WITH ELLIE */
+#stair-opening.opening-black {
+    background: #000;
+}
+
+#stair-opening.opening-black .opening-stairs-shade {
+    background: #000;
+}
+
+#stair-opening.opening-black .opening-stairs-content {
+    top: 50%;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+}
+
+#stair-opening.opening-black #opening-stairs-story {
+    color: #eee;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    line-height: 1.8;
+}
+/* Narration panels */
+#game-screen.narration-scene:not(.west-scene) #story-text,
+#stair-opening #opening-stairs-story,
+#ending-layer #ending-caption {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: clamp(19px, 1.8vw, 25px) !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    line-height: 1.6 !important;
+    letter-spacing: 0.2px;
+
+    color: #f5f0e8 !important;
+    text-align: left !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+
+    background: rgba(10, 10, 14, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-left: 3px solid #b73540;
+    border-radius: 6px;
+
+    padding: 18px 24px !important;
+    width: min(88%, 740px) !important;
+    box-sizing: border-box;
+}
+
+/* Center the regular narration panels */
+#game-screen.narration-scene:not(.west-scene) #story-text,
+#stair-opening #opening-stairs-story {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* Smaller screens */
+@media (max-width: 600px) {
+    #game-screen.narration-scene:not(.west-scene) #story-text,
+    #stair-opening #opening-stairs-story,
+    #ending-layer #ending-caption {
+        width: 92% !important;
+        padding: 14px 18px !important;
+        font-size: 18px !important;
+    }
+}
+#game-screen.narration-scene:not(.west-scene) #story-text,
+#stair-opening #opening-stairs-story,
+#ending-layer #ending-caption {
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: clamp(19px, 1.6vw, 23px) !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    line-height: 1.55 !important;
+    letter-spacing: 0 !important;
+}
